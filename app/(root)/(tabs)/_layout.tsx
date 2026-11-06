@@ -1,10 +1,11 @@
 import { Ionicons } from "@expo/vector-icons";
 import { Tabs } from "expo-router";
-// import { Icon, Label, NativeTabs } from 'expo-router/unstable-native-tabs';
+import { Icon, Label, NativeTabs } from 'expo-router/unstable-native-tabs';
+import { Platform } from "react-native";
 
 
-/**
-export default function TabLayout() {
+
+function IOSTabs() {
   return (
 
     <NativeTabs>
@@ -19,30 +20,16 @@ export default function TabLayout() {
         <Label>Search</Label>
       </NativeTabs.Trigger>
 
-
-      /*
-      <NativeTabs.Trigger name="saved">
-        <Icon sf="heart.fill" />
-        <Label>Saved</Label>
+      <NativeTabs.Trigger name="create">
+        <Icon sf="plus.circle.fill" />
+        <Label>Add Property</Label>
       </NativeTabs.Trigger>
-
-      <NativeTabs.Trigger name="profile">
-        <Icon sf="person.fill" />
-        <Label>Profile</Label>
-      </NativeTabs.Trigger>
-
-
-
-
+      
     </NativeTabs>
-  
 );
 }
 
-*/
-
-
-export default function TabLayout() {
+function AndroidTabs() {
   return (
     <Tabs
       screenOptions={{
@@ -57,6 +44,18 @@ export default function TabLayout() {
         },
       }}
     >
+
+
+      <Tabs.Screen
+        name="create"
+        options={{
+          title: "Add Property",
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="add-circle" size={size} color={color} />
+          ),
+        }}
+      />
+      
       <Tabs.Screen
         name="index"
         options={{
@@ -78,24 +77,19 @@ export default function TabLayout() {
       />
 
       <Tabs.Screen
-        name="saved"
-        options={{
-          title: "Saved",
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="heart" size={size} color={color} />
-          ),
-        }}
-      />
+  name="property/[id]"
+  options={{
+    href: null,
+  }}
+/>
 
-      <Tabs.Screen
-        name="profile"
-        options={{
-          title: "Profile",
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="person" size={size} color={color} />
-          ),
-        }}
-      />
+      
+
     </Tabs>
   );
+}
+
+
+export default function TabsLayout() {
+  return Platform.OS === "ios" ? <IOSTabs /> : <AndroidTabs />;
 }
